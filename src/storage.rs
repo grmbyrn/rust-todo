@@ -1,5 +1,4 @@
 use crate::task::Task;
-use serde_json;
 use std::fs::OpenOptions;
 use std::io::{self, BufReader, BufWriter};
 
@@ -32,7 +31,6 @@ pub fn save_tasks(tasks: &[Task]) -> io::Result<()> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use crate::task::Task;
     use std::fs;
 

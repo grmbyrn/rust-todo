@@ -4,6 +4,8 @@ use clap::{Parser, Subcommand};
 #[derive(Parser)]
 #[command(name = "taskflow")]
 #[command(about = "A simple Rust CLI todo app", long_about = None)]
+/// Represents the command-line interface for the todo app.
+/// Parses user commands and arguments using clap.
 pub struct Cli {
     #[command(subcommand)]
     pub command: Commands,

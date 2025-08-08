@@ -1,9 +1,13 @@
 use serde::{Deserialize, Serialize};
 
+/// Represents a single todo task.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Task {
+    /// Unique identifier for the task.
     pub id: u32,
+    /// Description of the task.
     pub description: String,
+    /// Whether the task is completed.
     pub done: bool,
 }
 
@@ -12,7 +16,8 @@ pub struct TaskManager {
 }
 
 impl TaskManager {
-    // Add task with unique ID
+    /// Adds a new task with a unique ID.
+    /// Returns a reference to the newly added task.
     pub fn add_task(&mut self, description: String) -> &Task {
         let new_id = self.next_id();
         let task = Task {
@@ -65,7 +70,7 @@ mod tests {
         let mut manager = TaskManager { tasks: Vec::new() };
         let task = manager.add_task("Test task".to_string());
         assert_eq!(task.description, "Test task");
-        assert_eq!(task.done, false);
+        assert!(!task.done);
         assert_eq!(task.id, 1);
     }
 
