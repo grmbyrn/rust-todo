@@ -55,3 +55,44 @@ impl TaskManager {
         self.tasks.iter().map(|t| t.id).max().unwrap_or(0) + 1
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add_task() {
+        let mut manager = TaskManager { tasks: Vec::new() };
+        let task = manager.add_task("Test task".to_string());
+        assert_eq!(task.description, "Test task");
+        assert_eq!(task.done, false);
+        assert_eq!(task.id, 1);
+    }
+
+    #[test]
+    fn test_list_tasks() {
+        let mut manager = TaskManager { tasks: Vec::new() };
+        manager.add_task("Task 1".to_string());
+        manager.add_task("Task 2".to_string());
+        let tasks = manager.list_tasks();
+        assert_eq!(tasks.len(), 2);
+    }
+
+    #[test]
+    fn test_mark_done() {
+        let mut manager = TaskManager { tasks: Vec::new() };
+        manager.add_task("Task 1".to_string());
+        assert!(manager.mark_done(1).is_ok());
+        assert!(manager.list_tasks()[0].done);
+        assert!(manager.mark_done(99).is_err());
+    }
+
+    #[test]
+    fn test_delete_task() {
+        let mut manager = TaskManager { tasks: Vec::new() };
+        manager.add_task("Task 1".to_string());
+        assert!(manager.delete_task(1).is_ok());
+        assert_eq!(manager.list_tasks().len(), 0);
+        assert!(manager.delete_task(99).is_err());
+    }
+}

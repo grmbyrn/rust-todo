@@ -29,3 +29,34 @@ pub fn save_tasks(tasks: &[Task]) -> io::Result<()> {
     serde_json::to_writer_pretty(writer, tasks)?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::task::Task;
+    use std::fs;
+
+    #[test]
+    fn test_save_and_load_tasks() {
+        let test_file = "test_tasks.json";
+        let tasks = vec![Task {
+            id: 1,
+            description: "Test".to_string(),
+            done: false,
+        }];
+        // Save
+        {
+            let file = std::fs::File::create(test_file).unwrap();
+            serde_json::to_writer_pretty(file, &tasks).unwrap();
+        }
+        // Load
+        {
+            let file = std::fs::File::open(test_file).unwrap();
+            let loaded: Vec<Task> = serde_json::from_reader(file).unwrap();
+            assert_eq!(loaded.len(), 1);
+            assert_eq!(loaded[0].description, "Test");
+        }
+        // Clean up
+        fs::remove_file(test_file).unwrap();
+    }
+}
