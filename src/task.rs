@@ -12,11 +12,6 @@ pub struct TaskManager {
 }
 
 impl TaskManager {
-    // Create new TaskManager with empty tasks list
-    pub fn new() -> Self {
-        TaskManager { tasks: Vec::new() }
-    }
-
     // Add task with unique ID
     pub fn add_task(&mut self, description: String) -> &Task {
         let new_id = self.next_id();
