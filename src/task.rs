@@ -41,7 +41,7 @@ impl TaskManager {
                 task.done = true;
                 Ok(())
             }
-            None => Err(format!("Task with id {} not found", id)),
+            None => Err(format!("Task with ID {} not found.", id)),
         }
     }
 
