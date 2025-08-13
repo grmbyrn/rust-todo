@@ -3,8 +3,9 @@
 ## 1. Project Overview
 
 TaskFlow is a cross-platform command-line application for managing a personal to-do list.  
-The application will allow users to create, view, update, and delete tasks from the terminal.  
-Tasks are stored persistently in a local JSON file so that the task list is preserved between runs.
+The application allows users to create, view, update, and delete tasks from the terminal.  
+Tasks are stored persistently in a local JSON file so that the task list is preserved between runs.  
+The codebase is modular, with each command’s logic separated into its own file for maintainability.
 
 ---
 
@@ -12,18 +13,20 @@ Tasks are stored persistently in a local JSON file so that the task list is pres
 
 ### 2.1 Supported Commands
 
-| Command | Description                                        | Example Usage             |
-| ------- | -------------------------------------------------- | ------------------------- |
-| add     | Adds a new task to the list.                       | `taskflow add "Buy milk"` |
-| list    | Displays all tasks with IDs and completion status. | `taskflow list`           |
-| done    | Marks a task as completed by ID.                   | `taskflow done 2`         |
-| delete  | Removes a task from the list by ID.                | `taskflow delete 2`       |
+| Command | Description                                        | Example Usage                 |
+| ------- | -------------------------------------------------- | ----------------------------- |
+| add     | Adds a new task to the list.                       | `taskflow add "Buy milk"`     |
+| list    | Displays all tasks with IDs and completion status. | `taskflow list`               |
+| done    | Marks a task as completed by ID.                   | `taskflow done 2`             |
+| undone  | Marks a completed task as not done by ID.          | `taskflow undone 2`           |
+| delete  | Removes a task from the list by ID.                | `taskflow delete 2`           |
 
 ### 2.2 Command Behavior
 
 - `add`: Assigns a unique ID to each new task.
 - `list`: Shows all tasks in the order they were added, with completion indicators.
 - `done`: Updates the task’s status to completed.
+- `undone`: Marks a completed task as not done. If the task is already not done, informs the user.
 - `delete`: Removes the specified task permanently.
 
 ---
@@ -46,6 +49,7 @@ Tasks are stored persistently in a local JSON file so that the task list is pres
 
 ### 3.4 Code Quality
 
+- Each command’s logic must be implemented in its own file/module.
 - Must pass `cargo fmt` with no formatting changes required.
 - Must pass `cargo clippy` with no warnings.
 - Code must compile without errors on stable Rust.
@@ -54,7 +58,7 @@ Tasks are stored persistently in a local JSON file so that the task list is pres
 
 ## 4. Acceptance Criteria
 
-- User can add, list, mark as done, and delete tasks without runtime errors.
+- User can add, list, mark as done, mark as not done, and delete tasks without runtime errors.
 - Tasks persist between runs in `tasks.json`.
 - Application compiles and runs on Linux, macOS, and Windows.
 - No warnings from `cargo clippy`.

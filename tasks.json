@@ -1,7 +1,17 @@
 [
   {
-    "id": 1,
-    "description": "Integration test task",
+    "id": 2,
+    "description": "Wash plates",
+    "done": true
+  },
+  {
+    "id": 3,
+    "description": "Do homework",
+    "done": false
+  },
+  {
+    "id": 4,
+    "description": "Do homework",
     "done": false
   }
 ]

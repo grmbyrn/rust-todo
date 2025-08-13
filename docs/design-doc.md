@@ -66,16 +66,16 @@ Output/Response
 
 ## 6. Module Interaction Summary
 
-- main.rs initializes CLI and calls functions in cli.rs.
-
-- cli.rs interprets commands, invoking methods in task.rs.
-
-- task.rs uses storage.rs to persist task state.
+- `main.rs` initializes CLI and dispatches commands to dedicated handler modules in `commands/`.
+- Each command (add, list, done, undone, delete) has its own file in `src/commands/` for maintainability and separation of concerns.
+- `cli.rs` defines the CLI structure and parses user input into commands.
+- Command handler modules invoke methods in `task.rs` for task management.
+- `task.rs` uses `storage.rs` to persist task state.
 
 ## 7. Architecture Diagram
 
 ```
-+--------------+       +----------+       +----------+       +------------+
-|   User CLI   |  -->  |  cli.rs  |  -->  | task.rs  |  -->  | storage.rs |
-+--------------+       +----------+       +----------+       +------------+
++--------------+       +----------+       +-------------------+       +----------+       +------------+
+|   User CLI   |  -->  |  cli.rs  |  -->  | commands/*.rs      |  -->  | task.rs  |  -->  | storage.rs |
++--------------+       +----------+       +-------------------+       +----------+       +------------+
 ```

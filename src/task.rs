@@ -45,6 +45,20 @@ impl TaskManager {
         }
     }
 
+    /// Mark a task as not done by ID
+    pub fn mark_undone(&mut self, id: u32) -> Result<(), String> {
+        match self.tasks.iter_mut().find(|t| t.id == id) {
+            Some(task) => {
+                if !task.done {
+                    return Err(format!("Task {} was not marked as done.", id));
+                }
+                task.done = false;
+                Ok(())
+            }
+            None => Err(format!("Task with ID {} not found.", id)),
+        }
+    }
+
     // Delete a task by ID
     pub fn delete_task(&mut self, id: u32) -> Result<(), String> {
         if let Some(pos) = self.tasks.iter().position(|t| t.id == id) {
@@ -55,7 +69,7 @@ impl TaskManager {
         }
     }
 
-    // Helper: find next available ID
+    // Helper: find the next available ID (always increment, never reuse)
     fn next_id(&self) -> u32 {
         self.tasks.iter().map(|t| t.id).max().unwrap_or(0) + 1
     }
@@ -90,6 +104,16 @@ mod tests {
         assert!(manager.mark_done(1).is_ok());
         assert!(manager.list_tasks()[0].done);
         assert!(manager.mark_done(99).is_err());
+    }
+
+    #[test]
+    fn test_mark_undone() {
+        let mut manager = TaskManager { tasks: Vec::new() };
+        manager.add_task("Task 1".to_string());
+        manager.mark_done(1).unwrap();
+        assert!(manager.mark_undone(1).is_ok());
+        assert!(!manager.list_tasks()[0].done);
+        assert!(manager.mark_undone(99).is_err());
     }
 
     #[test]

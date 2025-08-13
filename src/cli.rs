@@ -25,6 +25,11 @@ pub enum Commands {
         /// ID of the task
         id: u32,
     },
+    /// Mark a task as not done by ID
+    Undone {
+        /// ID of the task
+        id: u32,
+    },
     /// Delete a task by ID
     Delete {
         /// ID of the task
